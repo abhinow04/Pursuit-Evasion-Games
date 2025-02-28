@@ -1,0 +1,47 @@
+import rclpy
+from rclpy.node import Node
+from std_msgs.msg import Float32MultiArray
+import paho.mqtt.client as mqtt
+import json
+
+class EV3Bridge(Node):
+    def __init__(self):
+        super().__init__('ev3_bridge')
+
+        # ROS 2 Subscriber
+        self.subscription = self.create_subscription(
+            Float32MultiArray,
+            'motor_commands',  # ROS 2 topic
+            self.command_callback,
+            10
+        )
+
+        # MQTT Setup
+        self.mqtt_client = mqtt.Client()
+        self.mqtt_client.username_pw_set("esb201", "esb@201")  # Set MQTT username and password
+        
+        try:
+            self.mqtt_client.connect("192.168.142.163", 1883, 60)  # Replace with correct MQTT broker IP
+            self.mqtt_client.loop_start()
+            self.get_logger().info("Connected to MQTT broker successfully.")
+        except Exception as e:
+            self.get_logger().error(f"Failed to connect to MQTT broker: {e}")
+
+    def command_callback(self, msg):
+        command = msg.data
+        try:
+            json_command = json.dumps([float(x) for x in command])  # Convert list to JSON safely
+            self.get_logger().info(f"Sending command to EV3: {json_command}")
+            self.mqtt_client.publish("ev3/motor_commands", json_command)
+        except Exception as e:
+            self.get_logger().error(f"Error processing message: {e}")
+
+def main(args=None):
+    rclpy.init(args=args)
+    bridge = EV3Bridge()
+    rclpy.spin(bridge)
+    bridge.destroy_node()
+    rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()
