@@ -3,6 +3,8 @@ from scipy.optimize import minimize,linprog
 import pandas as pd
 from evader import evader
 from pursuer import pursuer
+import matplotlib.pyplot as plt
+
 class assignment:
     def __init__(self,pursuer_position,evader_position,target_position,speed,pur_sp,eva_sp):
 
@@ -15,13 +17,14 @@ class assignment:
         self.mpn = self.m + self.n # m+n
         self.mn = self.m * self.n # m * n
         self.cost = np.zeros([self.mn,self.mpn])
+        self.tolerance = 0.01
+        self.timestep = 0.01
         self.target = target_position #Target Position
         self.val = np.zeros([self.n,self.m]) #Value matrix
         self.B = np.zeros([self.m,self.n]) #Barrier matrix
         self.alpha = self.eva_sp/self.pur_sp #Speed ratio = evader/pursuer
         self.pursuers = [None] * self.n
         self.evaders = [None] * self.m
-        print("test")
 
         for i in range(self.n):
             self.pursuers[i] = pursuer(self.pur_pos[i,:].T,self.pur_sp[i],i)
@@ -34,7 +37,7 @@ class assignment:
         nes = np.linalg.norm(self.eva_pos*self.eva_pos,2,1)
         nps = np.linalg.norm(self.pur_pos*self.pur_pos,2,1)
         self.B = nes - nps.T * self.alpha**2
-        print("Barrier region\n",self.B)
+##        print("Barrier region\n",self.B)
 
     def val_mat(self):
         nps = np.sum(self.pur_pos**2, axis=1)
@@ -93,7 +96,6 @@ class assignment:
     def linporgram(self):
         f = self.a.T
         f = np.reshape(f, (np.shape(f)[0] + np.shape(f)[1]))
-        print(f)
         b = np.ones([self.mpn, 1])
         A = np.zeros([self.mpn, self.mn])
     
@@ -124,6 +126,45 @@ class assignment:
             if assigned_evaders.size > 0:
                 self.pursuers[j].evader = assigned_evaders.tolist()
                 self.pursuers[j].status = -1
+                
+
+    def plot_contin(self):
+        done = False
+        t = 0
+        time_chunk = 1000        
+        pursuer_traj = np.zeros((self.n,time_chunk, 2))
+        evader_traj = np.zeros((self.m,time_chunk,2))
+        a = 1
+        while not done:
+            a+=1
+            done = self.step()
+            print(t)
+
+            if t > time_chunk:
+                pursuer_traj = np.concatenate((pursuer_traj, np.zeros((self.n,time_chunk,2))), axis=0)
+                evader_traj = np.concatenate((evader_traj, np.zeros((self.m,time_chunk,2))), axis=0)
+
+                pursuer_traj = pursuer_traj[:, :t, :]
+                evader_traj = evader_traj[:, :t, :]
+
+            pursuer_traj[:, t, :] = np.array([[p.position[0], p.position[1]] for p in self.pursuers])
+            evader_traj[:, t, :] = np.array([[e.position[0], e.position[1]] for e in self.evaders])           
+            t += 1
+
+
+        plt.figure(figsize=(8, 6))
+        for j in range(self.n):
+            plt.plot(pursuer_traj[0, :, j], pursuer_traj[1, :, j], 'r', label="Pursuer" if j == 0 else "")
+
+        for i in range(self.m):
+            plt.plot(evader_traj[0, :, i], evader_traj[1, :, i], 'b', label="Evader" if i == 0 else "")
+
+        plt.xlabel("X-axis")
+        plt.ylabel("Y-axis")
+        plt.title("2D Pursuer-Evader Trajectories")
+        plt.legend()
+        plt.grid(True)
+        plt.show()
 
 
 
@@ -138,11 +179,14 @@ class assignment:
             self.evaders[row[i]].pursuer = columns[i]
             
         for j in range(len(columns)):            
-            self.pursuers(columns[j]).evader = row[j]
+            self.pursuers[columns[j]].evader = row[j]
 
         check = self.a * self.x
+        check_min = min(np.reshape(check,(len(check)*len(check[0]),1)))
 
-        if min(check[:])<0:
+        
+
+        if check_min[0]<0:
             self.win = 1
         else:
             self.win = 0
@@ -153,13 +197,15 @@ class assignment:
 
         else:
             self.check_cond = 0
-        print(self.win)
+            self.plot_current_positions()
+        self.plot_contin()
+        
     def updateStatus(self):
         for i in range(self.m):
-            j = self.evader(i).pursuer
-            if (np.linalg.norm(self.pursuer[j].position - self.evaders[i].position) < self.tolerance & np.linalg.norm(self.evaders[i].position) > self.tolerance):
+            j = self.evaders[i].pursuer
+            if (np.linalg.norm(self.pursuers[j].position - self.evaders[i].position) < self.tolerance and np.linalg.norm(self.evaders[i].position) > self.tolerance):
                 self.evaders[i].status = 1
-                self.pursuer[j] = 1
+                self.pursuers[j].status = 1  
             elif np.linalg.norm(self.evaders[i].position) < self.tolerance:
                 self.evaders[i].status = -1
 
@@ -174,20 +220,20 @@ class assignment:
                 return all(self.evaders[i].status == -1 for i in winning_evaders)
 
     def step(self):
-        self.update_status()
+        self.updateStatus()
         done = self.termination_status()
-        
+        print("Step")
         for i in [index for index, evader in enumerate(self.evaders) if evader.status == 0]:
             j = np.where(self.x[i, :] == 1)[0]
             if j.size > 0:
-                self.evaders[i].update_pos(self.evaders[i].position + self.timestep *
-                                           self.evaders[i].return_velocity(self.pursuers[j[0]], self.B[i, j[0]], self.tolerance))
-        
+                self.evaders[i].updatePos(self.evaders[i].position + self.timestep * self.evaders[i].return_velocity(self.pursuers[j[0]], self.B[i, j[0]], self.tolerance))
+                     
+
         for j in [index for index, pursuer in enumerate(self.pursuers) if pursuer.status == -1]:
+
             i = np.where(self.x[:, j] == 1)[0]
             if i.size > 0:
-                self.pursuers[j].update_pos(self.pursuers[j].position + self.timestep *
-                                            self.pursuers[j].return_velocity(self.evaders[i[0]], self.B[i[0], j], self.tolerance))
+                self.pursuers[j].updatePos(self.pursuers[j].position + self.timestep * self.pursuers[j].return_velocity(self.evaders[i[0]], self.B[i[0], j], self.tolerance))
 
         return done
 
@@ -205,8 +251,8 @@ class assignment:
         plt.ylabel('Y-axis')
         plt.grid(True)
         plt.legend()
-        plt.show()
-    
+##        plt.show()
+
     def plot_trajectories(self):
         self.check_win()
         self.plot_current_positions()
@@ -217,13 +263,14 @@ class assignment:
         evader_traj = np.zeros((2, time_chunk, self.m))
         
         while not done:
-            pursuer_traj[:, t, :] = np.array([[p.position[0], p.position[1]] for p in self.pursuers]).T
-            evader_traj[:, t, :] = np.array([[e.position[0], e.position[1]] for e in self.evaders]).T
+                
+            evader_traj[:, t, :] = np.array([[e.position[0],self.position[1]] for e in self.evaders]).T
             
             if t % 10 == 0:
                 plt.pause(0.01)
-                plt.clf()
+                plt.clf()   
                 for j in range(self.n):
+                    
                     plt.plot(pursuer_traj[0, :t, j], pursuer_traj[1, :t, j], 'r')
                 for i in range(self.m):
                     plt.plot(evader_traj[0, :t, i], evader_traj[1, :t, i], 'b')
@@ -235,8 +282,7 @@ class assignment:
             if t > time_chunk:
                 pursuer_traj = np.concatenate((pursuer_traj, np.zeros((2, time_chunk, self.n))), axis=1)
                 evader_traj = np.concatenate((evader_traj, np.zeros((2, time_chunk, self.m))), axis=1)
-        plt.show()
-
+##          plt.show()
 
 
 ##        c = self.val
