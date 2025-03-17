@@ -47,8 +47,8 @@ class EV3GotogoalNode(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    goal_x = -0.9
-    goal_y = -0.9
+    goal_x = -0.7
+    goal_y = 0.7
     gotogoal = EV3GotogoalNode(goal_x=goal_x, goal_y=goal_y)
     rclpy.spin(gotogoal)
     gotogoal.destroy_node()
