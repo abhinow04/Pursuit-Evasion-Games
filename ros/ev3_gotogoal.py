@@ -7,7 +7,7 @@ import signal
 import sys
 import math
 import numpy as np
-#import gogoal
+import gogoal
 
 class EV3GotogoalNode(Node):
 
@@ -15,7 +15,6 @@ class EV3GotogoalNode(Node):
         super().__init__('ev3_gotogoal')
         self.goal_x = goal_x
         self.goal_y = goal_y
-        self.val = [0,0,0]
         self.pursuer_pose_subscriber = self.create_subscription(PoseStamped, 'pursuer/pose', self.pursuer_callback, 10)
         print(self.pursuer_pose_subscriber)
 
@@ -26,57 +25,30 @@ class EV3GotogoalNode(Node):
         print("test")
         self.create_timer(0.1, self.gotogoal)
         self.speed_ratios = []
-
-
-        
-    def compute_speed_ratios(self, kp=1, k_theta=1, R=1):
-        #self.pursuer_callback()
-        print("test")
-        theta_target = 0
-        Vx = kp * (self.goal_x - self.x)
-        Vy = kp * (self.goal_y - self.y)
-        omega = k_theta * (theta_target - self.yaw)                  
-        J = np.array([
-            [1, 0, -R],
-            [-0.5, np.sqrt(3)/2, -R],
-            [-0.5, -np.sqrt(3)/2, -R]
-        ])
-        V_robot = np.array([Vx, Vy, omega])
-        V_wheels = np.dot(J, V_robot)
-        max_speed = np.max(np.abs(V_wheels))
-        if max_speed > 0:
-            self.speed_ratios = list((V_wheels *100 / max_speed)/1)
-        else:
-            self.speed_ratios = list(100*V_wheels/1)
-
-        print("Current Position: [",self.x,",",self.y,"\nSpeed Ratios: ",self.speed_ratios)
-        return self.speed_ratios
-
+        self.val = []
 
 
     def pursuer_callback(self, q):
         q_w, q_x, q_y, q_z = q.pose.orientation.x, q.pose.orientation.y, q.pose.orientation.z, q.pose.orientation.w
         self.x = q.pose.position.x
         self.y = q.pose.position.y
-        self.yaw = math.atan2(2 * (q_y * q_z + q_w * q_x), q_w**2 - q_x**2 - q_y**2 + q_z**2)
-        #ort = OmniRobot(np.array([self.x,sel.y]),self.yaw)
-        #mot_com = ort.move_to_target(np.array([self.goal_x,self.goal_y]))
-        print("hi")
-        self.val = self.compute_speed_ratios()
-        
-
-        
+        if (abs(np.linalg.norm(self.x-self.goal_x))> 0.05 or abs(np.linalg.norm(self.y-self.goal_y))> 0.05):
+            self.yaw = math.atan2(2 * (q_y * q_z + q_w * q_x), q_w**2 - q_x**2 - q_y**2 + q_z**2)
+            ort = gogoal.OmniRobot(np.array([self.x,self.y]),self.yaw)
+            self.val = ort.move_to_target(np.array([self.goal_x,self.goal_y]))
+        else:
+            self.val = [0,0,0]
     def gotogoal(self):
         msg = Float32MultiArray()
         msg.data = self.val 
         self.publisher.publish(msg)
 
 
-        
+
 def main(args=None):
     rclpy.init(args=args)
-    goal_x = 0.1
-    goal_y = 0.1
+    goal_x = -0.9
+    goal_y = -0.9
     gotogoal = EV3GotogoalNode(goal_x=goal_x, goal_y=goal_y)
     rclpy.spin(gotogoal)
     gotogoal.destroy_node()
