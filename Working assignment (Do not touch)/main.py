@@ -1,10 +1,9 @@
+#Import libraries
 import numpy as np
-import assign
-N = 2 
-n = 2 
-m = 2 
-v = np.ones(m) 
-u = np.ones(n) 
+import assign 
+N = 2 #Number of dimensions
+n = 2 #Number of Pursuers
+m = 2 #Number of Evaders 
 r = 1 
 
 pur_pos = 300 * np.random.randn(n,N)
@@ -14,10 +13,8 @@ print("Evader position: ",ev_pos)
 
 target = np.array([0,0])
 
-##pur_sp = 0.1 * np.random.rand(n,1)
-##eva_sp = 0.1 * np.random.rand(m,1)
-pur_sp = np.array([[30]] * n)
-eva_sp = np.array([[25]] * m)
+pur_sp = np.array([[30]] * n) #Pursuer Speed
+eva_sp = np.array([[25]] * m) #Evader Speed
 
-asgn = assign.assignment(pur_pos,ev_pos,target,v,pur_sp,eva_sp)
-asgn.check_win()
+asgn = assign.assignment(pur_pos,ev_pos,tar/get,pur_sp,eva_sp) #Assigning the pursuers
+asgn.check_win() #Initiating the game
