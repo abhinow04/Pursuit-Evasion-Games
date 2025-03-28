@@ -6,7 +6,7 @@ from pursuer import pursuer
 import matplotlib.pyplot as plt
 
 class assignment:
-    def __init__(self,pursuer_position,evader_position,target_position,speed,pur_sp,eva_sp):
+    def __init__(self,pursuer_position,evader_position,target_position,pur_sp,eva_sp):
 
         self.pur_pos = np.array(pursuer_position) #2D positions - nx2
         self.eva_pos = np.array(evader_position) #2D positions - mx2
