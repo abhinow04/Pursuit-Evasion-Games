@@ -21,7 +21,6 @@ class initialiser:
         self.p, self.ei = initialise_game.get_positions()
         self.p0i, self.p1i = self.p
         print(self.p0i)
-        print('niga')
         if bot == "p0":
             print(abs(np.linalg.norm(self.p0 - self.p0i)))
             if (self.p0s == 0 and abs(np.linalg.norm(self.p0 - self.p0i)) > self.tol):
