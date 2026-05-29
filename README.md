@@ -16,3 +16,5 @@ The setup involved fitting the Lego robots with omnidirectional wheels which pro
 The EV3 brick used as the CPU for the robot was fitted with the following hardware:
 - **Processor:** Samsung 64mb RAM processor
 - **Clock Speed:** 300 MHz
+
+<img width="542" height="282" alt="image" src="https://github.com/user-attachments/assets/5cee7ed2-c861-4f7a-9fa1-a0b59c11993c" />
