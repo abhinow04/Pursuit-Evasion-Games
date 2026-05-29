@@ -33,51 +33,6 @@ Require python modules include
 - Rclpy
 
 ## Methodology
-Methodology 
+[Methodology.pdf](https://github.com/user-attachments/files/28409046/Methodology.pdf)
 
- 
 
-Problem Formulation 
-
-We consider a Pursuit – Evasion (PE) game involving n pursuers and m evaders. The primary objective of each evader is to reach a stationary target, assumed without loss of generality to be the origin, while each pursuer’s objective is to prevent the evader from doing so.  
-
-A given evader is denoted by Ei , i ∈ M = (1, 2,…,m) and a given pursuer is denoted by Pj ,                   j ∈ N = (1, 2,...,n).  All players are assumed to be holonomic and interact in 2-dimensional Euclidean space.  
-
- 
-
-The position vectors of evader Ei and a pursuer Pj can be defined as 
-
-$xEi   = (xE, yE) ∈ R2, and xPj = (xp , yp) ∈ R2   for i ∈ M and j ∈ N$
-
-The control inputs for each team are defined by: 
-
-uEi = (uxi, uyi) and vEi = (vxi, vyi) for i ∈ M and j ∈ N. 
-
-The joint control for all evaders and pursuers is denoted by  
-
-Evader - u: = (uE1,...,uEm) 
-
-Pursuer - v: = (vP1,...,vPn) 
-
-We assume that players Ei and Pj move with constant speeds Ui > 0 and Vj > 0 respectively for         i ∈ M and j ∈ N. The speed ratio αij between evader Ei and a pursuer Pj can be defined as 
-αij= UiVj
-α
-ij
-=
- 
-U
-i
-V
-j
- 
-  which can take any real positive value for all i ∈ M and j ∈ N. 
-
- 
-
-The players have simple motion dynamics given by: 
-
-Text Box 2, TextboxẋEi (t) = uxi (t), ẏEi (t) = uyi (t)  
-
-ẋPj (t) = vxj (t), ẏPj (t) = vyj (t) 
-
-with initial positions xEi (0) = (xEi0 , y Ei0) and xPj (0) = (xPj0 , yPj0) for i ∈ M and j ∈ N. The global initial state is represented as:  x0 = R2(m+n) 
