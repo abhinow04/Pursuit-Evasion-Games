@@ -35,4 +35,10 @@ Require python modules include
 ## Methodology
 [Methodology.pdf](https://github.com/user-attachments/files/28409046/Methodology.pdf)
 
+## Sample Outputs
+
+https://github.com/user-attachments/assets/5009c73b-df22-4e88-8857-4c2a0074308e
+
+https://github.com/user-attachments/assets/52e9bb2e-1f2f-45bf-a9dc-383e514ffb93
+
 
