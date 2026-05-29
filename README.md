@@ -41,4 +41,17 @@ https://github.com/user-attachments/assets/5009c73b-df22-4e88-8857-4c2a0074308e
 
 https://github.com/user-attachments/assets/52e9bb2e-1f2f-45bf-a9dc-383e514ffb93
 
+## Results
+The simulations were completely performed within the python environment using live animation tool in the Matplotlib library. It was observed that the algorithm can be expanded to any number of pursuers and evaders given that the number of pursuers taken is greater than or equal to the number of evaders (n >= m). The initial positions are randomised using random tool in numpy library in python which leads to the observation that the algorithm works successfully for any given position of the robots and the assignment is precisely done.
 
+<img width="1920" height="1080" alt="Screenshot from 2025-05-06 13-54-44" src="https://github.com/user-attachments/assets/8313e468-922a-4d85-b216-89ea038c32ab" />
+
+Consider the PE game with 2 pursuers and 1 evader. The pursuers are starting at the positions 𝑥𝑝1 = (393.3885 , 298.4631) and 𝑥𝑝2 = (−68.4496 , −206.2937) while the evader is at 𝑥𝑒 = (−62.8854 , 43.3758). The pursuer speeds are set at 30 while the evader speeds are set at 20. It is observed that for this particular arrangement, pursuer 2 has been assigned to chase the evader. The game is a evader winning scenario and it is observed that the optimal path for the pursuer is to move towards the target point (the origin) and at terminal time, the pursuer is at point which is the closest it can be with respect to the origin with respect to its starting position.
+
+<img width="1920" height="1080" alt="Screenshot from 2025-05-06 13-52-57" src="https://github.com/user-attachments/assets/015eea40-216c-4cc6-951e-3662c6affeff" />
+
+Consider the PE game with 2 pursuers and 1 evader. The pursuers are starting at the positions 𝑥𝑝1 = (357.4483 , 179.4571) and 𝑥𝑝2 = (−508.5739 , 370.4696) while the evader is at 𝑥𝑒 = (−223.5273 , 356.2219). The pursuer speeds are set at 30 while the evader speeds are set at 20. It is observed that for this particular arrangement, the value of the game is found to be 173.3219 and pursuer 1 has been assigned to chase the evader. The game is a evader winning scenario and it is observed that the optimal path for the pursuer is to move towards the target point (the origin) and at terminal time, the pursuer is at point which is the closest it can be with respect to the origin with respect to its starting position.
+
+<img width="1920" height="1080" alt="Screenshot from 2025-05-06 13-55-22" src="https://github.com/user-attachments/assets/d95978da-ca87-457b-8bfb-4f9221f6cafe" />
+
+## References
