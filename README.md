@@ -35,12 +35,6 @@ Require python modules include
 ## Methodology
 [Methodology.pdf](https://github.com/user-attachments/files/28409046/Methodology.pdf)
 
-## Sample Outputs
-
-https://github.com/user-attachments/assets/5009c73b-df22-4e88-8857-4c2a0074308e
-
-https://github.com/user-attachments/assets/52e9bb2e-1f2f-45bf-a9dc-383e514ffb93
-
 ## Results
 The simulations were completely performed within the python environment using live animation tool in the Matplotlib library. It was observed that the algorithm can be expanded to any number of pursuers and evaders given that the number of pursuers taken is greater than or equal to the number of evaders (n >= m). The initial positions are randomised using random tool in numpy library in python which leads to the observation that the algorithm works successfully for any given position of the robots and the assignment is precisely done.
 
