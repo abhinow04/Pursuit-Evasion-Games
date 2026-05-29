@@ -20,3 +20,15 @@ The EV3 brick used as the CPU for the robot was fitted with the following hardwa
 <img width="253" height="271" alt="Screenshot from 2026-05-29 20-35-17" src="https://github.com/user-attachments/assets/29cc1438-2ad1-4289-a53c-e792d5a4a18c" />
 
 <img width="235" height="271" alt="image" src="https://github.com/user-attachments/assets/131e462a-c5ea-4a50-bbb5-845fecfcb3e3" />
+
+## Cloning
+```bash
+git clone https://github.com/abhinow04/Pursuit-Evasion-Games.git
+```
+### Modules
+Require python modules include
+- Pandas
+- Matplotlib
+- Numpy
+- Rclpy
+
