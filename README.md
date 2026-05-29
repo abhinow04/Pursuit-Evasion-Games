@@ -48,11 +48,11 @@ The simulations were completely performed within the python environment using li
 <img width="1920" height="1080" alt="Screenshot from 2025-05-06 13-55-22" src="https://github.com/user-attachments/assets/d95978da-ca87-457b-8bfb-4f9221f6cafe" />
 
 ## References
-- *Optimal Role Assignment for Multiplayer Reach-Avoid Differential Games in 3D* Space Abinash Agasti, Puduru Viswanadha Reddy, Member, IEEE, Bharath Bhikkaji
-- *Differential games* R. Isaacs
-- *The Assignment game* L. S. Shapley and M. Shubik
-- *Game Theory Models for Pursuit Evasion Games* Mohammad Emtiyaz Khan
-- *Introduction to Pursuit Evasion Differential Games* Isaac E. Weintraub, Meir Pachter and Eloy Garcia
-- *Kinematics and Control A Three Wheeled Omnidirectional Mobile Robot* Indrazno Siradjuddin, Aang Junaidi, Ratna Ika Putri, Erfan Rohadi, Supriatna Adhisuwignjo
-- *Cooperative Target protection from a superior Attacker* Eloy Garcia
-- *The Multi Pursuer Single Evader Game* Alexander Von Moll, David Casbeer, Eloy Garcia, Dejan Milutinović & Meir Pachter
+- **Optimal Role Assignment for Multiplayer Reach-Avoid Differential Games in 3D** Space Abinash Agasti, Puduru Viswanadha Reddy, Member, IEEE, Bharath Bhikkaji
+- **Differential games** R. Isaacs
+- **The Assignment game** L. S. Shapley and M. Shubik
+- **Game Theory Models for Pursuit Evasion Games** Mohammad Emtiyaz Khan
+- **Introduction to Pursuit Evasion Differential Games** Isaac E. Weintraub, Meir Pachter and Eloy Garcia
+- **Kinematics and Control A Three Wheeled Omnidirectional Mobile Robot** Indrazno Siradjuddin, Aang Junaidi, Ratna Ika Putri, Erfan Rohadi, Supriatna Adhisuwignjo
+- **Cooperative Target protection from a superior Attacker** Eloy Garcia
+- **The Multi Pursuer Single Evader Game** Alexander Von Moll, David Casbeer, Eloy Garcia, Dejan Milutinović & Meir Pachter
