@@ -17,4 +17,6 @@ The EV3 brick used as the CPU for the robot was fitted with the following hardwa
 - **Processor:** Samsung 64mb RAM processor
 - **Clock Speed:** 300 MHz
 
-<img width="542" height="282" alt="image" src="https://github.com/user-attachments/assets/5cee7ed2-c861-4f7a-9fa1-a0b59c11993c" />
+<img width="253" height="271" alt="Screenshot from 2026-05-29 20-35-17" src="https://github.com/user-attachments/assets/29cc1438-2ad1-4289-a53c-e792d5a4a18c" />
+
+<img width="235" height="271" alt="image" src="https://github.com/user-attachments/assets/131e462a-c5ea-4a50-bbb5-845fecfcb3e3" />
