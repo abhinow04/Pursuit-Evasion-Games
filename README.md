@@ -28,7 +28,9 @@ The EV3 brick used as the CPU for the robot was fitted with the following hardwa
 git clone https://github.com/abhinow04/Pursuit-Evasion-Games.git
 ```
 ### Modules
-Require python modules include
+Requires Python3 and ROS2 Jazzy Jalisco
+
+Required python modules include
 - Pandas
 - Matplotlib
 - Numpy
